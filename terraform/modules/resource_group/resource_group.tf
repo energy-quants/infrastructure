@@ -12,7 +12,7 @@ resource "random_id" "id" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group
 resource "azurerm_resource_group" "rg" {
-  name     = (
+  name = (
     var.append_uid
     ? "${var.name}-${random_id.id[0].hex}"
     : "${var.name}"
