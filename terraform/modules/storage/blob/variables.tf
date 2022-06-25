@@ -28,24 +28,6 @@ variable "resource_group_name" {
   type = string
 }
 
-variable "account_kind" {
-  description = <<-EOF
-    Specifies the kind of storage account.
-    Valid options are `{BlockBlobStorage|FileStorage|StorageV2}`.
-    Changing this forces a new storage account to be created.
-  EOF
-  type = string
-}
-
-variable "account_tier" {
-  description = <<-EOF
-    Defines the Tier `{Standard|Premium}` to use for this storage account.
-    Changing this forces a new storage account to be created.
-  EOF
-  type    = string
-  default = "Premium"
-}
-
 variable "account_replication_type" {
   description = <<-EOF
     Defines the type of replication to use for this storage account.
@@ -95,6 +77,12 @@ variable "blob_properties" {
     container_delete_retention_days = optional(number)  # [1, 365], default 7
   })
   default = null
+}
+
+variable "containers" {
+  description = "A list of container names to create in the storage account."
+  type        = list(string)
+  default     = []
 }
 
 variable "tags" {
