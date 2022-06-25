@@ -16,11 +16,7 @@ resource "random_id" "id" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 resource "azurerm_storage_account" "st" {
-  name = (
-    var.append_uid
-    ? "${var.name}${random_id.id[0].hex}"
-    : "${var.name}"
-  )
+  name = "${var.name}${random_id.id[0].hex}"
   location                 = var.location
   resource_group_name      = var.resource_group_name
   account_kind             = var.account_kind
@@ -64,17 +60,14 @@ resource "azurerm_storage_account" "st" {
     }
   }
 
-
-
   network_rules {
     default_action             = "Deny"
     bypass                     = ["Logging", "Metrics", "AzureServices"]
-    ip_rules                   = []
-    virtual_network_subnet_ids = []
+    ip_rules                   = var.allowed_ip_addresses
+    virtual_network_subnet_ids = var.allowed_subnet_ids
   }
 
-  tags = var.tags
-
+  tags = local.tags
   lifecycle {
     create_before_destroy = true
   }

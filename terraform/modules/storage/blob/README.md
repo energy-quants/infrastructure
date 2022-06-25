@@ -1,4 +1,4 @@
-# Module: `storage/account`
+# Module: `storage/blob`
 
 This module creates an Azure Storage Account.
 
