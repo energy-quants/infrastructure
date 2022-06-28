@@ -99,13 +99,13 @@ variable "os_disk" {
   type = object({
     caching                   = string  # {None|ReadOnly|ReadWrite}
     storage_account_type      = string  # {Standard_LRS|StandardSSD_LRS|Premium_LRS|StandardSSD_ZRS|Premium_ZRS}
-    write_accelerator_enabled = bool   # Requires caching is None and account type is Premium_LRS
+    write_accelerator_enabled = bool  # Requires caching is None and account type is Premium_LRS
     ephemeral_disk            = optional(string)  # {CacheDisk|ResourceDisk}
   })
   default = {
-    caching                   = "ReadOnly"
+    caching                   = "None"
     storage_account_type      = "Premium_LRS"
-    write_accelerator_enabled = false
+    write_accelerator_enabled = true
     ephemeral_disk       = null  # null means disk is not ephemeral
   }
 }
