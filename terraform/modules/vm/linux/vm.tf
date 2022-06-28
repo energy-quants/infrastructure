@@ -37,18 +37,31 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location                        = var.location
   resource_group_name             = var.resource_group_name
   size                            = var.size
+
   admin_username                  = var.admin_username
   admin_password                  = random_password.admin.result
+  identity {
+    type = "SystemAssigned"
+  }
   disable_password_authentication = false
+
+  dynamic admin_ssh_key {
+    for_each = var.ssh_keys
+    content {
+      username   = var.admin_username
+      public_key = file(admin_ssh_key.value)
+    }
+  }
+
 
   source_image_id = var.source_image_id
   dynamic source_image_reference {
     for_each = var.source_image_id == null ? var.source_image_reference[*] : []
     content {
-      publisher = var.source_image_reference.publisher
-      offer     = var.source_image_reference.offer
-      sku       = var.source_image_reference.sku
-      version   = var.source_image_reference.version
+      publisher = source_image_reference.publisher
+      offer     = source_image_reference.offer
+      sku       = source_image_reference.sku
+      version   = source_image_reference.version
     }
   }
 
@@ -56,7 +69,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
     name                 = "${local.name_prefix}-${random_id.vm.hex}-${random_id.disk.hex}"
     storage_account_type = var.os_disk.storage_account_type
     caching              = var.os_disk.caching
-
     # Requires caching is None and account type is Premium_LRS
     write_accelerator_enabled = var.os_disk.write_accelerator_enabled
 
@@ -64,7 +76,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
       for_each = var.os_disk.ephemeral_disk[*]
       content {
         option    = "Local"
-        placement = each.key
+        placement = diff_disk_settings.key
       }
     }
   }
