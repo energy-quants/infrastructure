@@ -98,7 +98,7 @@ variable "blob_properties" {
 }
 
 variable "tags" {
-  description = "A mapping of tags which should be assigned to the Resource Group."
+  description = "A mapping of tags which should be assigned to the resource."
   type        = map
   default     = {}
 }

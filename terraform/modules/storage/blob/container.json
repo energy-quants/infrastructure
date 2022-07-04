@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storage_account_name": {
-            "type": "String"
+            "type": "string"
         },
         "container_name": {
-            "type": "String"
+            "type": "string"
         }
     },
     "variables": {},

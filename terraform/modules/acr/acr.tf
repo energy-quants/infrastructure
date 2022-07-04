@@ -12,7 +12,7 @@ resource "random_id" "id" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_registry
 resource "azurerm_container_registry" "acr" {
-  name                =  "${local.name_prefix}acr${random_id.id.hex}"
+  name                = "${local.name_prefix}acrx${random_id.id.hex}"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = var.sku

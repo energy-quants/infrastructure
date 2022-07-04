@@ -1,7 +1,6 @@
 # https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id
 resource "random_id" "id" {
-  count = var.append_uid ? 1 : 0
-  byte_length = 3
+  byte_length = 6
   keepers = {
     # Anything which forces a new resource to be created should be in the keepers
     name                          = "${var.name}"
@@ -16,7 +15,7 @@ resource "random_id" "id" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 resource "azurerm_storage_account" "st" {
-  name = "${var.name}${random_id.id[0].hex}"
+  name = "${local.name_prefix}stax${random_id.id.hex}"
   location                 = var.location
   resource_group_name      = var.resource_group_name
   account_kind             = var.account_kind
