@@ -9,7 +9,7 @@ resource "random_id" "nic" {
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface
 resource "azurerm_network_interface" "nic" {
-  name = "${local.name_prefix}-${random_id.vm.hex}-${random_id.nic.hex}"
+  name = "${local.name_prefix}-vm-${random_id.vm.hex}-nic-${random_id.nic.hex}"
   location                      = var.location
   resource_group_name           = var.resource_group_name
   enable_accelerated_networking = var.enable_accelerated_networking
