@@ -13,5 +13,5 @@ locals{
     australiaeast = "ae",
   }
   name_prefix = "eq-${local.location_code[var.location]}"
-  tags = merge(var.tags, {"name" = "var.name"})
+  tags = merge(var.tags, {"name" = "${var.name}"})
 }

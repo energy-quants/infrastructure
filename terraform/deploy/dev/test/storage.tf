@@ -1,4 +1,4 @@
-module "st-event-queue" {
+module "st-event_queue" {
   source   = "../../../modules/storage/account"
   name     = "test-event-queue"
   location = "australiaeast"
@@ -8,7 +8,7 @@ module "st-event-queue" {
   tags     = var.tags
 }
 
-module "st-event-queue" {
+module "st-storage_event" {
   source   = "../../../modules/storage/account"
   name     = "test-storage-event"
   location = "australiaeast"
